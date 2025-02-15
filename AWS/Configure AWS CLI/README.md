@@ -21,3 +21,23 @@ CLI profile name [AdministratorAccess-<account id>]: <>
 
 5. If logged out, use:
 > aws sso login
+
+
+#Enable tab auto-completion for aws commands in MacOS
+For zsh
+
+1. Install awscli
+> brew install awscli
+
+2. Enable auto completion
+> autoload -Uz compinit
+> compinit
+> autoload -Uz bashcompinit
+> bashcompinit
+> complete -C '/usr/local/bin/aws_completer' aws
+
+3. Add to ~/.zshrc to make the changes permanent
+> echo 'complete -C "/usr/local/bin/aws_completer" aws' >> ~/.zshrc
+
+4. Source the file to apple changes
+> source ~/.zshrc
