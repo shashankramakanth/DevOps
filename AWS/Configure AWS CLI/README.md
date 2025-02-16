@@ -41,3 +41,6 @@ For zsh
 
 4. Source the file to apple changes
 > source ~/.zshrc
+
+If sso session is timed out:
+> aws sso login

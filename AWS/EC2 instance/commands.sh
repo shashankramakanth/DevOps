@@ -36,3 +36,7 @@ aws ec2 authorize-security-group-ingress \
     --protocol icmp --port -1 --cidr 0.0.0.0/0    
 
 #Create a user using cloud-init  - refer user-data.sh
+
+
+#Terminate instances
+aws ec2 terminate-instances --instance-ids i-1234567890abcdef0
