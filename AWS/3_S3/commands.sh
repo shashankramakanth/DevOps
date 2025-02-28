@@ -8,3 +8,8 @@ aws s3api create-bucket --bucket my-bucket-name --region ap-south-1 --create-buc
 #List all S3 buckets
 aws s3 ls
 
+#Create S3 bucket with versioning enabled
+aws s3api create-bucket --bucket my-$(aws sts get-caller-identity --query 'Account' --output text)-staticwebsite-bucket1 --region us-east-1
+
+#Delete an S3 bucket
+aws s3api delete-bucket --bucket my-bucket-name
