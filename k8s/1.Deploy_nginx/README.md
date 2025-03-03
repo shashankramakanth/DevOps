@@ -1,0 +1,1 @@
+Simple yaml file to deploy an nginx pod
