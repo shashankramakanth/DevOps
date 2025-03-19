@@ -154,3 +154,56 @@
     ```
 
 Multipass is much more convenient than manually setting up VMs with VirtualBox or Hyper-V, as it handles most of the VM creation and networking details automatically. It's perfect for testing Kubernetes in a multi-node setup on a Windows PC.
+
+**Upgrading kubernetes:**
+
+Control plane upgrade steps:
+
+1. Drain the control-plane node
+2. Upgrade kubeadm on the control-plane node
+    
+    `sudo apt-get update && sudo apt-get install -y --allow-change-held-packaged kubeadm-1.27.2-00` 
+    
+3. Plan the upgrade
+    
+    `kubeadm upgrade plan <version>` 
+    
+4. Apply the upgrade
+    
+    `kubeadm upgrade apply <version>` 
+    
+5. Upgrade kubelet and kubectl on control plabe node
+6. Uncordon the control plane node
+
+Worker node upgrade steps:
+
+1. Drain the node
+2. Upgrade kubeadm
+3. Upgrade the kubelet configuration
+    
+    `kubadm upgrade node` 
+    
+4. Upgrade kubelet and kubectl
+5. Do a daemon-reload
+    
+    `sudo systemctl daemon-reload` 
+    
+6. Restart kubelet
+    
+    `sudo systemctl restart kubelet` 
+    
+7. Uncordon the node
+
+**Backing up and restoring ETCD data:**
+
+ETCD is the backend data storage solution for k8s cluster. Kubernetes objects, applications and configurations are stored in ETCD
+
+Can be backedup using ETCDCTL
+
+`$ETCDCTL_API=3 etcdctl --endpoints $ENDPOINT snapshot save <filename>`
+
+Restore:
+
+ETCD restore operation creates a new logical cluster
+
+`$ETCDCTL_API=3 etcdctl snapshot restore <filename>`
