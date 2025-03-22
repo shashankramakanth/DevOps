@@ -1,0 +1,15 @@
+- Each node has a set of memory and CPUs available
+- kube-scheduler takes into consideration the amount of resources required by a pod and those available on the nodes and identifies the best node to place the pod
+- If no node has enough resources, the pod will be placed in Pending with event reason - insufficent cpu.
+- 1 CPU = 1 AWS vCPU = 1 Azure core = 1 GCP core = 1 Hyperthread
+- Resource Limits can be set for each pod in pod-definition file
+- What happens when a pod tries to exceed the specified limit:
+    - The system throttles cpu
+    - Pod can use more memory than its limit until a threshold after which the pod is terminated with Out of Memory(OOM) error.
+- Default behaviour:
+    - There is no limit and any pod can consume as much cpu and memory as required.
+- If there is no request specified and only limits are mentioned, kubernetes automatically sets request to limits
+- Ideal setup for cpu→ no limit but set requests → this will ensure if there are no other pods requesting for resources, current pod can get more resources than requested. However, when there is contention, current pod will be throttled based on resources requested
+- Limit ranges
+    - Ensure that each pod gets minimum amount of cpu and memory
+    - Applies at namespace level
