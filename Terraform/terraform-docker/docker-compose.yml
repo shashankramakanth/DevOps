@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  terraform:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: terraform-env
+    volumes:
+      - ./terraform-data:/terraform
+      - ~/.aws:/root/.aws:ro
+    environment:
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+      - AWS_SESSION_TOKEN
+    stdin_open: true
+    tty: true

@@ -1,1 +1,19 @@
+# Terraform files
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+crash.log
+crash.*.log
+*.tfplan
+.terraformrc
+terraform.rc
+.terraform.lock.hcl
+
+# Local .env files
+.env
+.env.*
+
+# Docker files
 .DS_Store
