@@ -14,3 +14,8 @@ else
   fi
   echo "Terraform container stopped successfully."
 fi
+
+# Unset AWS environment variables
+echo "Unsetting AWS environment variables..."
+unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN
+echo "AWS environment variables unset."
