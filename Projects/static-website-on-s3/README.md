@@ -40,7 +40,7 @@ aws s3 website s3://my-static-site-devops-2025/ \
 --error-document error.html
 ```
 3. Set public read access for S3 bucket
-Refer bucket-policy.json
+Refer [bucket-policy.json](./bucket-policy.json)
 
 4. Apply the policy
 ```bash
