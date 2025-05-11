@@ -23,8 +23,8 @@ This project demonstrates how to host a static website on **Amazon S3** with glo
 
 
 A folder named website/ containing:
-	•	index.html
-	•	error.html
+	- index.html
+	- error.html
 
 Setup instructions:
 
@@ -40,7 +40,7 @@ aws s3 website s3://my-static-site-devops-2025/ \
 --error-document error.html
 ```
 3. Set public read access for S3 bucket
-Refer [bucket-policy.json](./bucket-policy.json)
+- Refer [bucket-policy.json](./bucket-policy.json)
 
 4. Apply the policy
 ```bash
@@ -53,23 +53,23 @@ aws s3api put-bucket-policy \
 aws s3 sync ./website s3://my-static-site-devops-2025
 ```
 6.  Create CloudFront Distribution
-	•	Go to AWS Console → CloudFront → Create Distribution
-	•	Origin domain: my-static-site-devops-2025.s3-website-<region>.amazonaws.com
-	•	Origin protocol policy: HTTP only
-	•	Viewer protocol policy: Redirect HTTP to HTTPS
-	•	Viewer certificate: Default CloudFront certificate (*.cloudfront.net)
+	- Go to AWS Console → CloudFront → Create Distribution
+	- Origin domain: my-static-site-devops-2025.s3-website-<region>.amazonaws.com
+	- Origin protocol policy: HTTP only
+	- Viewer protocol policy: Redirect HTTP to HTTPS
+	- Viewer certificate: Default CloudFront certificate (*.cloudfront.net)
 
 7. Once deployed, use cloudfront url to access website
 
 8. If cloudfront url shows "Access Denied"
-  •	Verify the bucket’s Block Public Access settings:
+  - Verify the bucket’s Block Public Access settings:
   ```bash
   aws s3api get-public-access-block --bucket my-static-site-devops-2025
   ```
 
-  •	 If BlockPublicPolicy is true, it’s preventing the policy application.
+  - If BlockPublicPolicy is true, it’s preventing the policy application.
   
-  •	 To allow public policies (required for static website hosting), disable the BlockPublicPolicy setting:
+  - To allow public policies (required for static website hosting), disable the BlockPublicPolicy setting:
 ```bash
   aws s3api put-public-access-block \
   --bucket my-static-site-devops-2025 \
