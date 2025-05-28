@@ -1,7 +1,7 @@
 FROM alpine:3.18
 
 # Set Terraform version
-ENV TERRAFORM_VERSION="1.11.4"
+ENV TERRAFORM_VERSION="1.12.1"
 
 # Install dependencies
 RUN apk add --update --no-cache \
