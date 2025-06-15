@@ -8,6 +8,10 @@ fi
 
 AWS_PROFILE="$1"
 
+#export AWS_PROFILE
+export AWS_PROFILE
+echo "AWS Profile set to: $AWS_PROFILE"
+
 # Perform AWS SSO login
 echo "Logging in to AWS SSO for profile $AWS_PROFILE..."
 aws sso login --profile $AWS_PROFILE
@@ -22,6 +26,17 @@ eval "$(aws configure export-credentials --profile $AWS_PROFILE --format env)"
 if [ $? -ne 0 ]; then
   echo "Failed to export AWS credentials. Please check your AWS configuration."
   exit 1
+fi
+
+# Export AWS region
+echo "Exporting AWS region for profile $AWS_PROFILE..."
+AWS_REGION=$(aws configure get region --profile $AWS_PROFILE)
+if [ -z "$AWS_REGION" ]; then
+  echo "No region configured for profile $AWS_PROFILE. Using default: us-east-1"
+  export AWS_REGION="us-east-1"
+else
+  export AWS_REGION
+  echo "AWS region set to: $AWS_REGION"
 fi
 
 # Check if the terraform container is running
