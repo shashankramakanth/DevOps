@@ -20,7 +20,7 @@ This project provides a Docker-based Terraform environment with persistent stora
 ## Directory Structure
 
 ```
-terraform-docker-project/
+terraform-docker-sso/
 ├── Dockerfile                # Defines the Terraform container image
 ├── docker-compose.yml        # Orchestrates the container setup
 ├── connect.sh                # Helper script to connect to the container
@@ -35,7 +35,7 @@ terraform-docker-project/
 1. **Clone this repository**
    ```bash
    git clone <repository-url>
-   cd terraform-docker-project
+   cd terraform-docker-sso
    ```
 
 2. **Build and start the container**
