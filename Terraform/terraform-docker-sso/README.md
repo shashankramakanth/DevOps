@@ -5,8 +5,8 @@ This project provides a Docker-based Terraform environment with persistent stora
 ## Features
 
 - **Persistent Storage**: All Terraform files and state are preserved
-- **Custom Terraform Image**: Alpine-based image with Terraform pre-installed
-- **AWS CLI Included**: AWS CLI is pre-installed for credential verification and AWS operations
+- **Custom Terraform Image**: Alpine-based image with Terraform, AWS CLI, and Azure CLI pre-installed.
+- **AWS & Azure CLI Included**: For credential verification and multi-cloud operations.
 - **AWS Integration**: Mount your AWS credentials or use environment variables
 - **Developer Tools**: Includes common tools like git, jq, vim, and nano
 - **Version Controlled**: Designed to work well with Git (includes .gitignore)
@@ -61,7 +61,7 @@ terraform-docker-sso/
    terraform apply
    ```
 
-## AWS Authentication Options
+## Cloud Authentication
 
 ### Option 1: Environment Variables
 
@@ -71,6 +71,12 @@ Before starting the container, set your AWS credentials as environment variables
 export AWS_ACCESS_KEY_ID=your_access_key
 export AWS_SECRET_ACCESS_KEY=your_secret_key
 export AWS_SESSION_TOKEN=your_session_token  # If using temporary credentials
+
+# For Azure Service Principal (used by Terraform)
+export ARM_CLIENT_ID=your_client_id
+export ARM_CLIENT_SECRET=your_client_secret
+export ARM_SUBSCRIPTION_ID=your_subscription_id
+export ARM_TENANT_ID=your_tenant_id
 ```
 
 Then start the container:
