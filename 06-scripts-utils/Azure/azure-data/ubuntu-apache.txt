@@ -1,0 +1,8 @@
+#cloud-config
+package_upgrade: true
+packages:
+  - apache2
+runcmd:
+  - systemctl start apache2
+  - systemctl enable apache2
+  - echo '<h1>Ubuntu 22.04 Web Server</h1><p>Apache is running successfully!</p>' > /var/www/html/index.html
