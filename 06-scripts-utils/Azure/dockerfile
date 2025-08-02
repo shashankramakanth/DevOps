@@ -19,12 +19,31 @@ RUN apt-get update && apt-get install -y \
     git \
     vim \
     jq \
+    python3 \
+    python3-pip \
+    python3-venv \
+    bash-completion \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Azure CLI
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
-# Install Azure CLI ML extension (v1)
+# Install Azure SDK for Python packages
+RUN pip3 install --no-cache-dir \
+    azure-identity \
+    azure-mgmt-resource \
+    azure-mgmt-compute \
+    azure-mgmt-storage \
+    azure-mgmt-keyvault \
+    azure-mgmt-network \
+    azure-mgmt-subscription \
+    azure-storage-blob \
+    azure-storage-file-share \
+    azure-storage-queue \
+    azure-keyvault-secrets \
+    azure-keyvault-keys \
+    azure-keyvault-certificates
+
 # RUN az extension add --name azure-cli-ml
 # Install Terraform
 RUN wget https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip \
