@@ -1,7 +1,0 @@
-# Azure SDK for Python
-azure-identity
-azure-mgmt-resource
-
-# Add other Azure SDK modules here as needed, for example:
-# azure-storage-blob
-# azure-keyvault-secrets
