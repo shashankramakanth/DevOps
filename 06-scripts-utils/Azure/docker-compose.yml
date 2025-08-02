@@ -8,6 +8,7 @@ services:
       # Mount only workspace and terraform cache (no Azure config persistence)
       - ./azure-data:/workspace
       - ./terraform-cache:/root/.terraform
+      - ../../../DevOps:/DevOps
     environment:
       # Azure credentials will be passed via environment variables
       - AZURE_CLIENT_ID=${AZURE_CLIENT_ID}
