@@ -6,11 +6,10 @@ terraform {
     }
   }
   backend "azurerm" {
-    resource_group_name = "${var.resource_group_name}" #replace with your resource group name
-    location            = "westus"
-    storage_account_name = "${var.storage_account_name}" #replace with your storage account name
-    container_name      = "tfstate"
-    key                 = "terraform.tfstate"
+    resource_group_name = "<>" #replace with your resource group name
+    storage_account_name = "<>" #replace with your storage account name
+    container_name      = "aztfcontainer1" 
+    key                 = "dev.terraform.tf" #name of the tfstate file,
   } 
   required_version = ">= 1.0.0"
 }
