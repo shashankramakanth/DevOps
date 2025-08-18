@@ -1,0 +1,38 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "storageAccountTier": {
+            "type": "string",
+            "metadata": {
+                "description": "definition of the storage account tier"
+            },
+            "defaultValue": "Standard",
+            "allowedValues": [
+                "Standard",
+                "Premium"
+            ]
+        }
+    },
+    "functions": [],
+    "variables": {
+        "storageaccountname": "storagearmtest4c71411a"
+    },
+    "resources": [
+        {
+            "name": "[variables('storageaccountname')]",
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2023-05-01",
+            "tags": {
+                "displayName": "[variables('storageaccountname')]"
+            },
+            "location": "[resourceGroup().location]",
+            "kind": "StorageV2",
+            "sku": {
+                "name": "Standard_GRS",
+                "tier": "[parameters('storageAccountTier')]"
+            }  
+        }
+    ],
+    "outputs": {}
+}
