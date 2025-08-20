@@ -9,7 +9,7 @@ crash.*.log
 *.tfplan
 .terraformrc
 terraform.rc
-
+*test*
 # Local .env files
 .env
 .env.*
