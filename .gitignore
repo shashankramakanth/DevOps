@@ -9,10 +9,13 @@ crash.*.log
 *.tfplan
 .terraformrc
 terraform.rc
-*test*
+
 # Local .env files
 .env
 .env.*
 
 # Docker files
 .DS_Store
+
+#Other files
+*test*
