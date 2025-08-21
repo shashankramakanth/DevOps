@@ -15,3 +15,10 @@ variable "storage_account_name" {
     type        = string
     default     = "azsatf4c71411a" # replace with your storage account name
 }
+
+variable "location" {
+  description = "The Azure region where the storage account will be created."
+  type        = list(string)
+  default     = ["eastus", "westus", "southcentralus"] # replace with your desired location
+  
+}
