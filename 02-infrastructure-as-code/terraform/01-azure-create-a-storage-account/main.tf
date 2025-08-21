@@ -28,7 +28,7 @@ data "azurerm_resource_group" "az-rg-sandbox-01" {
 resource "azurerm_storage_account" "az-sa-sandbox-01" {
   name                     = "${var.storage_account_name}" #must be globally unique
   resource_group_name      = data.azurerm_resource_group.az-rg-sandbox-01.name #implicit dependency
-  location                 = data.azurerm_resource_group.az-rg-sandbox-01.location #implicit dependency
+  location                 = element(var.location, 0) #selecting the first location from the list
   account_tier             = "Standard"
   account_replication_type = "LRS"
 
