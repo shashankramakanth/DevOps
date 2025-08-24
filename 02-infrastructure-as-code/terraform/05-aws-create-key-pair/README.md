@@ -1,0 +1,5 @@
+- Create a key pair in AWS
+- Name of the key pair should be devops-kp.
+- Key pair type must be rsa.
+- The private key file should be saved under /home/bob/devops-kp.pem.
+- The Terraform working directory is /home/bob/terraform
