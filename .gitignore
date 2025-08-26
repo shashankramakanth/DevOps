@@ -19,3 +19,4 @@ terraform.rc
 
 #Other files
 *test*
+machine.json
