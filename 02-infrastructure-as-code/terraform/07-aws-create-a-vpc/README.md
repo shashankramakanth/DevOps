@@ -1,0 +1,1 @@
+- Create a VPC named xfusion-vpc in region us-east-1 with any IPv4 CIDR block through terraform.
