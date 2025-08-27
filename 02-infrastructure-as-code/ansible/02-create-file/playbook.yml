@@ -1,0 +1,28 @@
+- name: Playbook to create file
+  hosts: all
+  become: true
+  tasks:
+   - name: Create file on app server 1
+     ansible.builtin.file:
+      path: /usr/src/appdata.txt
+      state: touch
+      owner: tony
+      group: tony
+      mode: "0777"
+     when: inventory_hostname == "stapp01"
+   - name: Create file on app server 2
+     ansible.builtin.file:
+      path: /usr/src/appdata.txt
+      state: touch
+      owner: steve
+      group: steve
+      mode: "0777"
+     when: inventory_hostname == "stapp02"
+   - name: Create file on app server 3
+     ansible.builtin.file:
+      path: /usr/src/appdata.txt
+      state: touch
+      owner: banner
+      group: banner
+      mode: "0777"
+     when: inventory_hostname == "stapp03"
