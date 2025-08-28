@@ -53,16 +53,19 @@ resource "azurerm_network_security_group" "az-nsg-sandbox-01" {
   name                = "${var.prefix}-nsg-sandbox-01"
   location            = data.azurerm_resource_group.az-rg-sandbox-01.location
   resource_group_name = data.azurerm_resource_group.az-rg-sandbox-01.name
-    security_rule {
-        name                       = "AllowSSH-http-https"
-        priority                   = 1000
-        direction                  = "Inbound"
-        access                     = "Allow"
-        protocol                   = "Tcp"
-        source_port_range          = "*"
-        destination_port_ranges    = ["22","80", "443"]
-        source_address_prefix      = "*"
-        destination_address_prefix = "*"
+    dynamic "security_rule" {
+        for_each = local.nsg_rules
+        content {
+            name                       = security_rule.value.name
+            priority                   = security_rule.value.priority
+            direction                  = security_rule.value.direction
+            access                     = security_rule.value.access
+            protocol                   = security_rule.value.protocol
+            source_port_range          = security_rule.value.source_port_range
+            destination_port_ranges    = security_rule.value.destination_port_ranges
+            source_address_prefix      = security_rule.value.source_address_prefix
+            destination_address_prefix = security_rule.value.destination_address_prefix
+        }
     }
 }
 
@@ -121,3 +124,12 @@ resource "azurerm_linux_virtual_machine" "az-vm-sandbox-01" {
     created_by  = "Terraform"
   }
 }   
+
+output "demo" {
+  value = [for id in azurerm_linux_virtual_machine.az-vm-sandbox-01 : id.id]
+}
+
+output "splat" {
+  value = local.nsg_rules[*].allow_http
+  
+}
