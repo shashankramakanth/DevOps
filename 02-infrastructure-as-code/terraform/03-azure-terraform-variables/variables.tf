@@ -14,4 +14,8 @@ variable "storage_account_name" {
     description = "The name of the storage account. Must be globally unique."
     type        = string
     default     = "<>" # replace with your storage account name
+    validation {
+      condition = length(var.storage_account_name) <= 24 && can(regex("^[a-z0-9]+$", var.storage_account_name))
+      error_message = "Storage account name must be between 3 and 24 characters in length and can contain only lowercase letters and numbers."
+    }
 }
