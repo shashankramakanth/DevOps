@@ -236,5 +236,17 @@ resource "azurerm_virtual_machine" "vm2" {
     environment = "Demo"
     created_by  = "Terraform"
   }
-}
 
+  provisioner "remote-exec" {
+    connection {
+      type        = "ssh"
+      host        = azurerm_public_ip.pip02.ip_address
+      user        = "azureuser"
+      password    = var.admin_password
+      timeout     = "2m"
+  }
+    inline = [
+      "sudo apt-get update -y"
+    ]
+}
+}

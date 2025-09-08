@@ -10,3 +10,5 @@
 
 - Create VMs in both the VNETs and verify communication
 
+- Add a **Provisioner** block to one of the VMs and run ```sudo apt-get update -y ```
+
