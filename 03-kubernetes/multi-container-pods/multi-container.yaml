@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: myapp-container
+  name: myapp-container
+spec:
+  containers:
+  - image: busybox:1.28
+    name: myapp-container
+    env:
+      - name: FIRSTNAME
+        value: "Shashank"
+    command: ['sh', '-c', 'echo Hello $FIRSTNAME; sleep 3600']
+   # resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+  initContainers:
+    - name: init-myservice
+      image: busybox:1.28
+      command: ['sh', '-c', 'echo The app is starting!; sleep 5']
+status: {}
