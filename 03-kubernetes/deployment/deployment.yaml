@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-deployment
+spec:
+  replicas: 3
+  selector: # <--- 1. Rule for finding pods
+    matchLabels:
+      app: nginx
+  template: # <--- 2. Blueprint for creating pods
+    metadata:
+      labels:
+        app: nginx # <--- 3. Labels for the pods
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.19.3
+          ports:
+            - containerPort: 80
