@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    app: nginx-daemon
+  name: nginx-daemon
+spec:
+  selector:
+    matchLabels:
+      app: nginx-daemon
+  template:
+    metadata:
+      labels:
+        app: nginx-daemon
+    spec:
+      nodeSelector:
+       node-role.kubernetes.io/role: worker
+      containers:
+      - image: nginx:latest
+        name: nginx
