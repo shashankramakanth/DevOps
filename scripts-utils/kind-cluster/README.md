@@ -3,3 +3,6 @@ kind create cluster --name my-cka-cluster01 --config /Users/shashankramakanth/Do
 
 - Delete a cluster
 kind delete cluster --name my-cka-cluster01
+
+- ssh or exec into a node
+docker exec -it my-cka-cluster01-control-plane bash

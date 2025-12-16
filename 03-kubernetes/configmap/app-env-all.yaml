@@ -1,0 +1,21 @@
+#Create a pod that uses all keys from a configmap as environment variables
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-env-all-pod
+  namespace: configmap-lab
+spec:
+  containers:
+    - name: app-container
+      image: busybox
+      command: ['sh', '-c', 'echo FEATURE_BETA_API: $FEATURE_BETA_API; echo FEATURE_NEW_UI: $FEATURE_NEW_UI; echo MAINTENANCE_MODE: $MAINTENANCE_MODE; sleep 3600']
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "250m"
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
+      envFrom:
+        - configMapRef:
+            name: feature-flags

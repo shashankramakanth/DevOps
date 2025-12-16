@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  FEATURE_BETA_API: "disabled"
+  FEATURE_NEW_UI: "enabled"
+  MAINTENANCE_MODE: "false"
+kind: ConfigMap
+metadata:
+  name: feature-flags

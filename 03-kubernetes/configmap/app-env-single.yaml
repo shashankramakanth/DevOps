@@ -1,0 +1,29 @@
+#Create a pod that uses individual keys from a configmap as environment variables
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-env-pod
+  namespace: configmap-lab
+spec:
+  containers:
+    - name: app-container
+      image: busybox
+      command: ['sh', '-c', 'echo DATABASE_HOST=$DATABASE_HOST && echo DATABASE_PORT=$DATABASE_PORT && sleep 3600']
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "250m"
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
+      env:
+        - name: DATABASE_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: db-config
+              key: DB_HOST
+        - name: DATABASE_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: db-config
+              key: DB_PORT
