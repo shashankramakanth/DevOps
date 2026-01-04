@@ -20,3 +20,6 @@ terraform.rc
 #Other files
 *test*
 machine.json
+
+#OCI files
+*/.oci-config/*oci-config/
