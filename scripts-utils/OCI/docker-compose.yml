@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  oci-cli:
+    build: .
+    container_name: oci-cli-container
+    volumes:
+      # Mount only workspace and OCI config (no other persistence)
+      - ./oci-data:/workspace
+      - ./oci-config:/root/.oci
+      - ../../../DevOps:/DevOps
+    environment:
+      # OCI credentials will be passed via environment variables
+      - OCI_TENANCY=${OCI_TENANCY}
+      - OCI_USER=${OCI_USER}
+      - OCI_FINGERPRINT=${OCI_FINGERPRINT}
+      - OCI_PRIVATE_KEY_PATH=/root/.oci/oci_api_key.pem
+      - OCI_REGION=${OCI_REGION}
+      - OCI_CLI_AUTH=api_key
+      - OCI_CLI_SUPPRESS_FILE_PERMISSIONS_WARNING=True
+    stdin_open: true
+    tty: true
+    working_dir: /workspace
+    command: tail -f /dev/null  # Keep container running
