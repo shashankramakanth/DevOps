@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #####################################################
-# Helios Master ARM Instance Auto-Retry Script
+# ARM Instance Auto-Retry Script (1 OCPU, 6GB RAM)
 # Works in: Local, Docker, CI/CD
 #####################################################
 
@@ -23,7 +23,7 @@ else
 fi
 
 echo "=================================================="
-echo "  HELIOS MASTER - ARM INSTANCE AUTO-CREATION"
+echo "  ARM INSTANCE AUTO-CREATION (1 OCPU, 6GB RAM)"
 echo "=================================================="
 echo ""
 
@@ -95,11 +95,11 @@ fi
 
 NUM_ADS=${#ADS[@]}
 
-# Configuration
+# Configuration - 1 OCPU and 6GB RAM for ARM instance
 SHAPE="${SHAPE:-VM.Standard.A1.Flex}"
-OCPUS="${OCPUS:-2}"
-MEMORY_GB="${MEMORY_GB:-12}"
-DISPLAY_NAME="${DISPLAY_NAME:-helios-master-01}"
+OCPUS="${OCPUS:-1}"
+MEMORY_GB="${MEMORY_GB:-6}"
+DISPLAY_NAME="${DISPLAY_NAME:-arm-1ocpu-6gb}"
 # SSH key - different paths for Docker vs Local
 if [ "$ENV" == "Docker" ] || [ "$ENV" == "CI/CD" ]; then
   SSH_KEY_FILE="${SSH_KEY_FILE:-/root/.oci/ssh-key-2026-01-03.key.pub}"
@@ -202,6 +202,7 @@ while [ $ROUND -le $MAX_ROUNDS ]; do
       echo "=================================================="
       echo "Name:       $DISPLAY_NAME"
       echo "AD:         $CURRENT_AD"
+      echo "Shape:      $SHAPE ($OCPUS OCPU, ${MEMORY_GB}GB RAM)"
       echo "Public IP:  $PUBLIC_IP"
       echo "Private IP: $PRIVATE_IP"
       echo "Username:   ubuntu"
@@ -229,27 +230,23 @@ while [ $ROUND -le $MAX_ROUNDS ]; do
       
       # Save info to file (if not in CI)
       if [ -z "${CI:-}" ]; then
-        INFO_FILE="${INFO_FILE:-$HOME/helios-master-info.txt}"
+        INFO_FILE="${INFO_FILE:-$HOME/arm-instance-info.txt}"
         cat > "$INFO_FILE" <<INFOEOF
-HELIOS MASTER NODE
-==================
+ARM INSTANCE (1 OCPU, 6GB RAM)
+==============================
 
 Created: $(date)
 Environment: $ENV
 
 Instance OCID: $INSTANCE_OCID
 Availability Domain: $CURRENT_AD
+Shape:         $SHAPE ($OCPUS OCPU, ${MEMORY_GB}GB RAM)
 Public IP:     $PUBLIC_IP
 Private IP:    $PRIVATE_IP
 Username:      ubuntu
 
 SSH Command:
 ssh ubuntu@$PUBLIC_IP
-
-Next Steps:
-1. SSH into the instance
-2. Run Phase 1 setup commands
-3. Create worker nodes
 INFOEOF
         
         echo -e "${GREEN}Instance details saved to: $INFO_FILE${NC}"
@@ -298,9 +295,9 @@ echo ""
 echo "Capacity has been unavailable for extended period."
 echo "Suggestions:"
 echo "  1. Try different availability domain"
-echo "  2. Try different region (create new account)"
-echo "  3. Try at different time (2-5 AM IST best)"
-echo "  4. Use x86 instances as fallback"
+echo "  2. Try different region"
+echo "  3. Try at different time (2-5 AM local time tends to have better availability)"
+echo "  4. Consider using x86 instances as fallback"
 echo ""
 
 exit 1

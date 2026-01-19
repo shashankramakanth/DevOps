@@ -1,0 +1,49 @@
+#!/bin/bash
+#####################################################
+# OCI Configuration for ARM Instance Creation
+# 
+# SETUP:
+# 1. Copy this file to your home directory:
+#    cp helios-oci-vars.sh.template ~/helios-oci-vars.sh
+# 2. Edit with your actual OCI values:
+#    nano ~/helios-oci-vars.sh
+# 3. Run the scripts:
+#    ./scripts/create-master.sh
+#####################################################
+
+# Required: Your OCI Compartment OCID
+# Find at: OCI Console → Identity → Compartments → Copy OCID
+export COMPARTMENT_OCID="ocid1.compartment.oc1..aaaaaaaaxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+# Required: Availability Domain name
+# Find at: OCI Console → Compute → Availability Domains
+# Examples: AP-MUMBAI-1-AD-1, US-ASHBURN-AD-1, EU-FRANKFURT-1-AD-1
+export AD="AP-MUMBAI-1-AD-1"
+
+# Required: Image OCID (Ubuntu ARM recommended for free tier)
+# Find at: OCI Console → Compute → Images → Platform Images → Filter by ARM
+# Select "Canonical Ubuntu" with aarch64 architecture
+export IMAGE_OCID="ocid1.image.oc1..aaaaaaaaxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+# Required: Subnet OCID
+# Find at: OCI Console → Networking → Virtual Cloud Networks → Your VCN → Subnets → Copy OCID
+export SUBNET_OCID="ocid1.subnet.oc1..aaaaaaaaxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+#####################################################
+# Optional: Override defaults (uncomment to use)
+#####################################################
+
+# Instance display name
+# export DISPLAY_NAME="helios-master"
+
+# SSH key file path (default: ~/.ssh/id_rsa.pub)
+# export SSH_KEY_FILE="$HOME/.ssh/id_rsa.pub"
+
+# ARM shape configuration
+# export SHAPE="VM.Standard.A1.Flex"
+# export OCPUS=2
+# export MEMORY_GB=12
+
+# Retry settings
+# export MAX_ATTEMPTS=288       # Total attempts (288 = 48 hours at 10min intervals)
+# export RETRY_INTERVAL=600     # Seconds between retries (600 = 10 minutes)
