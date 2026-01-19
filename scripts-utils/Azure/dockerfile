@@ -3,7 +3,7 @@ FROM ubuntu:22.04
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
-ENV TF_VERSION=1.9.8
+ENV TF_VERSION=1.14.3
 ENV AZURE_CLI_VERSION=2.65.0
 
 # Install dependencies
@@ -31,11 +31,11 @@ RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 # Install AWS CLI v2
 RUN ARCH=$(uname -m) && \
     if [ "$ARCH" = "x86_64" ]; then \
-        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"; \
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"; \
     elif [ "$ARCH" = "aarch64" ]; then \
-        curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv2.zip"; \
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv2.zip"; \
     else \
-        echo "Unsupported architecture: $ARCH"; exit 1; \
+    echo "Unsupported architecture: $ARCH"; exit 1; \
     fi && \
     unzip awscliv2.zip && \
     ./aws/install && \
@@ -69,6 +69,25 @@ RUN wget https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_V
     && unzip terraform_${TF_VERSION}_linux_amd64.zip \
     && mv terraform /usr/local/bin/ \
     && rm terraform_${TF_VERSION}_linux_amd64.zip
+
+# Install Kubectl
+RUN ARCH=$(uname -m) && \
+    if [ "$ARCH" = "x86_64" ]; then \
+    KUBECTL_ARCH="amd64"; \
+    elif [ "$ARCH" = "aarch64" ]; then \
+    KUBECTL_ARCH="arm64"; \
+    else \
+    echo "Unsupported architecture: $ARCH"; exit 1; \
+    fi && \
+    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/${KUBECTL_ARCH}/kubectl" && \
+    chmod +x kubectl && \
+    mv kubectl /usr/local/bin/
+
+# Install Helm
+RUN curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 && \
+    chmod 700 get_helm.sh && \
+    ./get_helm.sh && \
+    rm get_helm.sh
 
 # Create working directory
 WORKDIR /workspace
