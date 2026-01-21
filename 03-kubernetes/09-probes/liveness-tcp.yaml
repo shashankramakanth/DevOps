@@ -1,0 +1,19 @@
+#This will fail as there is no db username and password
+
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: liveness-tcp
+  name: liveness-tcp
+spec:
+  containers:
+  - image: postgres:13
+    name: liveness-tcp
+    livenessProbe:
+      tcpSocket:
+        port: 5432
+      initialDelaySeconds: 15
+      periodSeconds: 20
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
