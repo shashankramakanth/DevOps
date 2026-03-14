@@ -10,22 +10,12 @@ output "vpc_cidr" {
 
 output "public_subnet_ids" {
     description = "List of public subnet IDs"
-    value       = [for k, v in "aws_subnet.this" : v.id if v.map_public_ip_on_launch == "true"]
+    value       = [for k, v in aws_subnet.this : v.id if v.map_public_ip_on_launch]
 }
 
 output "private_subnet_ids" {
     description = "List of private subnet IDs"
-    value       = [for k, v in "aws_subnet.this" : v.id if v.map_public_ip_on_launch == "false"]
-}
-
-output "public_subnet_ids" {
-    description = "List of public subnet IDs"
-    value       = [for k, v in "aws_subnet.this" : v.id if v.map_public_ip_on_launch == "true"]
-}
-
-output "private_subnet_ids" {
-    description = "List of private subnet IDs"
-    value       = [for k, v in "aws_subnet.this" : v.id if v.map_public_ip_on_launch == "false"]
+    value       = [for k, v in aws_subnet.this : v.id if !v.map_public_ip_on_launch]
 }
 
 output "nat_gateway_id" {

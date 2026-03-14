@@ -22,7 +22,7 @@ variable "aws_project" {
 variable "availability_zones" {
   description = "List of availability zones"
   type        = list(string)
-  default     = ["ap-south-1a", "ap-south-1b"]
+  default     = ["us-east-1a", "us-east-1b"]
 }
 
 variable "allowed_environments" {
@@ -31,7 +31,7 @@ variable "allowed_environments" {
   default     = ["dev", "stage", "prod"]
 
   validation {
-    condition = alltrue([for env in var.aws_environment : contains(var.allowed_environments, env)])
+    condition = contains(var.allowed_environments, var.aws_environment)
     error_message = "AWS environment must be dev, stage, or prod"
   }
 }

@@ -47,7 +47,7 @@ resource "aws_eip" "nat" {
 resource "aws_nat_gateway" "this" {
     count = var.enable_nat_gateway ? 1 : 0
     allocation_id = aws_eip.nat[0].id
-    subnet_id = [for k, v in "aws_subnet.this" : v.id if v.map_public_ip_on_launch == "true"][0]
+    subnet_id = [for k, v in aws_subnet.this : v.id if v.map_public_ip_on_launch][0]
 
     tags = {
         Name = "${var.aws_project}-${var.aws_environment}-nat-gateway"
@@ -90,13 +90,13 @@ resource "aws_route_table" "private" {
 #route table association
 
 resource "aws_route_table_association" "public" {
-    for_each = [for k, v in "aws_subnet.this" : v.id if v.map_public_ip_on_launch == "true"][0]
+    for_each = {for k, v in aws_subnet.this : k => v if v.map_public_ip_on_launch}
     route_table_id = aws_route_table.public.id
-    subnet_id = aws_subnet.this[each.key].id
+    subnet_id = each.value.id
 }
 
 resource "aws_route_table_association" "private" {
-    for_each = var.enable_nat_gateway ? {for k, v in "aws_subnet.this" : v.id if v.map_public_ip_on_launch == "false"} : {}
+    for_each = var.enable_nat_gateway ? {for k, v in aws_subnet.this : k => v if !v.map_public_ip_on_launch} : {}
     route_table_id = aws_route_table.private[0].id
-    subnet_id = aws_subnet.this[each.key].id
+    subnet_id = each.value.id
 }
