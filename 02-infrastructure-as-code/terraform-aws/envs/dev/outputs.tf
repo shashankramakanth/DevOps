@@ -1,13 +1,3 @@
-output "bucket_name" {
-  description = "Name of the S3 bucket"
-  value       = aws_s3_bucket.bucket01.bucket
-}
-
-output "bucket_arn" {
-  description = "ARN of the S3 bucket"
-  value       = aws_s3_bucket.bucket01.arn
-}
-
 output "vpc_id" {
     description = "ID of the VPC"
     value       = module.vpc.vpc_id
@@ -36,4 +26,14 @@ output "public_route_table_id" {
 output "private_route_table_id" {
     description = "ID of the private route table"
     value       = module.vpc.private_route_table_id
+}
+
+output "instance_id" {
+  description = "EC2 instance ID"
+  value       = module.compute.compute_resource_ids
+}
+
+output "instance_private_ip" {
+  description = "Private IP of the EC2 instance"
+  value       = module.compute.app_private_ip
 }

@@ -1,15 +1,3 @@
-resource "random_id" "suffix" {
-  byte_length = 8
-}
-
-locals {
-  bucket_name = "${var.aws_project}-${var.aws_environment}-bucket-${random_id.suffix.hex}"
-}
-
-resource "aws_s3_bucket" "bucket01" {
-  bucket = local.bucket_name
-}
-
 module "vpc" {
     source = "../../modules/vpc"
     vpc_cidr = "10.0.0.0/16"
@@ -41,8 +29,41 @@ module "vpc" {
 
 }
 
-# resource "null_resource" "delay" {
-#   provisioner "local-exec" {
-#     command = "sleep 3600"
-#   }
-# }
+module "security" {
+    source = "../../modules/security"
+    aws_project = var.aws_project
+    aws_environment = var.aws_environment
+    vpc_id = module.vpc.vpc_id
+}
+
+# Look up latest Amazon Linux 2 AMI — never hardcode AMI IDs
+data "aws_ami" "amazon_linux" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-hvm-*-x86_64-gp2"]
+  }
+}
+
+module "compute" {
+  source          = "../../modules/compute"
+  aws_project     = var.aws_project
+  aws_environment = var.aws_environment
+  subnet_ids      = module.vpc.private_subnet_ids
+  security_group_id = module.security.security_group_compute_ids
+  instance_type   = "t3.micro"
+  ami_id          = data.aws_ami.amazon_linux.id
+  user_data       = <<-EOF
+    #!/bin/bash
+    yum update -y
+    yum install -y httpd
+    sed -i 's/Listen 80/Listen 8080/' /etc/httpd/conf/httpd.conf
+    systemctl start httpd
+    systemctl enable httpd
+    mkdir -p /var/www/html
+    echo "OK" > /var/www/html/health
+    echo "<h1>$(hostname -f)</h1>" > /var/www/html/index.html
+  EOF
+}

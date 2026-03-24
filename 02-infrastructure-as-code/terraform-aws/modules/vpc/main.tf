@@ -6,6 +6,10 @@ resource "aws_vpc" "this" {
     tags = {
         Name = "${var.aws_project}-${var.aws_environment}-vpc"
     }
+
+    lifecycle {
+        prevent_destroy = true
+    }
 }
 
 resource "aws_internet_gateway" "this" {

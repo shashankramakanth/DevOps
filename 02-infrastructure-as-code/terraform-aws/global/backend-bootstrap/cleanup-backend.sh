@@ -41,7 +41,7 @@ for pattern in "${PATTERNS[@]}"; do
             echo -e "  ${CYAN}removing file:${NC} $rel_path"
             rm -f "$item"
         fi
-        ((CLEANED++))
+        CLEANED=$((CLEANED + 1))
     done < <(find "$PROJECT_ROOT" -name "$pattern" -print0 2>/dev/null)
 done
 
