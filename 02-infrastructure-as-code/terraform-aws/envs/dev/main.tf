@@ -1,3 +1,9 @@
+data "aws_ssm_parameter" "db_password" {
+  name            = "/terraform-aws/dev/db-password"
+  with_decryption = true
+}
+
+
 module "vpc" {
     source = "../../modules/vpc"
     vpc_cidr = "10.0.0.0/16"

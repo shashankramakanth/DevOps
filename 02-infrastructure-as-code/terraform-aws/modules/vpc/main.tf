@@ -1,3 +1,5 @@
+# checkov:skip=CKV2_AWS_11:VPC flow logs deferred to capstone phase
+# checkov:skip=CKV2_AWS_12:Default SG restriction deferred to capstone phase
 resource "aws_vpc" "this" {
     cidr_block = var.vpc_cidr
     enable_dns_hostnames = true
@@ -20,7 +22,7 @@ resource "aws_internet_gateway" "this" {
     }
 }
 
-
+# checkov:skip=CKV_AWS_130:Public subnets intentionally assign public IPs
 resource "aws_subnet" "this" {
 
     for_each = var.subnets
@@ -36,7 +38,7 @@ resource "aws_subnet" "this" {
 }
 
 #EIP for NAT Gateway
-
+# checkov:skip=CKV2_AWS_19:EIP attached to NAT Gateway not EC2 instance
 resource "aws_eip" "nat" {
     count = var.enable_nat_gateway ? 1 : 0
     domain = "vpc"

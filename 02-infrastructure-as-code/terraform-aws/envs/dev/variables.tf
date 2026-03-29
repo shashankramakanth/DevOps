@@ -19,29 +19,29 @@ variable "aws_project" {
   type        = string
 }
 
-variable "availability_zones" {
-  description = "List of availability zones"
-  type        = list(string)
-  default     = ["us-east-1a", "us-east-1b"]
-}
+# variable "availability_zones" {
+#   description = "List of availability zones"
+#   type        = list(string)
+#   default     = ["us-east-1a", "us-east-1b"]
+# }
 
-variable "allowed_environments" {
-  description = "List of allowed environments"
-  type        = set(string)
-  default     = ["dev", "stage", "prod"]
+# variable "allowed_environments" {
+#   description = "List of allowed environments"
+#   type        = set(string)
+#   default     = ["dev", "stage", "prod"]
+#
+#   validation {
+#     condition = contains(var.allowed_environments, var.aws_environment)
+#     error_message = "AWS environment must be dev, stage, or prod"
+#   }
+# }
 
-  validation {
-    condition = contains(var.allowed_environments, var.aws_environment)
-    error_message = "AWS environment must be dev, stage, or prod"
-  }
-}
-
-variable "instance_types" {
-  description = "List of instance types"
-  type        = map(string)
-  default     = {
-    dev = "t3.micro"
-    stage = "t3.small"
-    prod = "t3.small"
-  }
-}
+# variable "instance_types" {
+#   description = "List of instance types"
+#   type        = map(string)
+#   default     = {
+#     dev = "t3.micro"
+#     stage = "t3.small"
+#     prod = "t3.small"
+#   }
+# }

@@ -61,7 +61,8 @@ RUN pip3 install --no-cache-dir \
 RUN pip3 install --no-cache-dir \
     boto3 \
     botocore \
-    awscli-local
+    awscli-local \
+    checkov==3.2.339
 
 # RUN az extension add --name azure-cli-ml
 # Install Terraform
@@ -88,6 +89,17 @@ RUN curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/s
     chmod 700 get_helm.sh && \
     ./get_helm.sh && \
     rm get_helm.sh
+
+# Install tflint
+RUN ARCH=$(uname -m) && \
+    if [ "$ARCH" = "x86_64" ]; then \
+    TFLINT_ARCH="amd64"; \
+    elif [ "$ARCH" = "aarch64" ]; then \
+    TFLINT_ARCH="arm64"; \
+    else \
+    echo "Unsupported architecture: $ARCH"; exit 1; \
+    fi && \
+    curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
 
 # Create working directory
 WORKDIR /workspace

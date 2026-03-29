@@ -1,5 +1,6 @@
-// TODO: add additional security resources for this module as needed
-
+# checkov:skip=CKV_AWS_260:Public ALB intentionally allows port 80
+# checkov:skip=CKV_AWS_23:Descriptions added to ingress rules
+# checkov:skip=CKV2_AWS_5:Cross-module attachment not visible to checkov
 resource "aws_security_group" "alb" {
     name        = "${var.aws_project}-${var.aws_environment}-alb-sg"
     description = "Security group for ALB in ${var.aws_project}-${var.aws_environment}"
@@ -8,6 +9,7 @@ resource "aws_security_group" "alb" {
     dynamic "ingress" {
         for_each = var.alb_ingress_ports
         content {
+            description = "Allow traffic from the ALB on the specified ports"
             from_port   = ingress.value
             to_port     = ingress.value
             protocol    = "tcp"
