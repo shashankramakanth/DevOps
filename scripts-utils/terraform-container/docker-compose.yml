@@ -1,14 +1,14 @@
-version: '3.8'
-
 services:
-  azure-terraform:
+  terraform:
     build: .
-    container_name: azure-terraform-container
+    image: terraform-container
+    container_name: terraform-container
     volumes:
       # Mount only workspace and terraform cache (no Azure config persistence)
       - ./azure-data:/workspace
       - ./terraform-cache:/root/.terraform
       - ../../../DevOps:/DevOps
+      - ./deploycost:/deploycost
     environment:
       # Azure credentials will be passed via environment variables
       - AZURE_CLIENT_ID=${AZURE_CLIENT_ID}
@@ -17,4 +17,4 @@ services:
     stdin_open: true
     tty: true
     working_dir: /workspace
-    command: tail -f /dev/null  # Keep container running
+    command: bash -c "pip install -e /deploycost && tail -f /dev/null"

@@ -7,9 +7,9 @@ variable "aws_environment" {
   description = "AWS environment"
   type        = string
   default     = "dev"
-  
+
   validation {
-    condition = contains(["dev", "stage", "prod"], var.aws_environment)
+    condition     = contains(["dev", "stage", "prod"], var.aws_environment)
     error_message = "AWS environment must be dev, stage, or prod"
   }
 }

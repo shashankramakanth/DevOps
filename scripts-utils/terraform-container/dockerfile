@@ -63,7 +63,11 @@ RUN pip3 install --no-cache-dir \
     botocore \
     awscli-local \
     checkov==3.2.339 \
-    pre-commit
+    pre-commit \
+    pytest \
+    pyyaml \
+    tabulate \
+    click
 
 # RUN az extension add --name azure-cli-ml
 # Install Terraform

@@ -7,6 +7,7 @@
 crash.log
 crash.*.log
 *.tfplan
+**/tfplan
 .terraformrc
 terraform.rc
 
@@ -23,3 +24,6 @@ machine.json
 
 #OCI config files
 scripts-utils/OCI/oci-config/
+
+# Symlinks
+scripts-utils/terraform-container/deploycost
